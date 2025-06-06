@@ -50,7 +50,7 @@ export default function Settings() {
     dispatch(setSelectedAudioDevice(selectedAudioDevice));
     dispatch(setSelectedVideoDevice(selectedVideoDevice));
     console.log('Settings saved:', { selectedAudioDevice, selectedVideoDevice });
-    history.push('/'); // Redirect to the main page
+    history.push('/');
   };
 
   return (
@@ -58,7 +58,6 @@ export default function Settings() {
       <Typography variant="h4" component="h1" gutterBottom>
         Settings
       </Typography>
-
       <Box sx={{ marginBottom: 3 }}>
         <Typography variant="h6" component="h2" gutterBottom>
           Audio Devices
@@ -76,7 +75,6 @@ export default function Settings() {
           ))}
         </Select>
       </Box>
-
       <Box sx={{ marginBottom: 3 }}>
         <Typography variant="h6" component="h2" gutterBottom>
           Video Devices
@@ -94,7 +92,6 @@ export default function Settings() {
           ))}
         </Select>
       </Box>
-
       <Button
         variant="contained"
         color="primary"

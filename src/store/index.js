@@ -1,12 +1,10 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 
-// Восстанавливаем состояние из localStorage
 const persistedState = {
   selectedAudioDevice: localStorage.getItem('selectedAudioDevice') || '',
   selectedVideoDevice: localStorage.getItem('selectedVideoDevice') || '',
 };
 
-// Создаем slice для пользователя
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -28,10 +26,8 @@ const userSlice = createSlice({
   },
 });
 
-// Экспортируем действия
 export const { setUsername, setSelectedAudioDevice, setSelectedVideoDevice } = userSlice.actions;
 
-// Создаем хранилище
 const store = configureStore({
   reducer: {
     user: userSlice.reducer,

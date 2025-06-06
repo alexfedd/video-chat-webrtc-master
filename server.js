@@ -16,9 +16,35 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 
 // Настройка подключения к PostgreSQL
-const sequelize = new Sequelize('video_chat', 'postgres', 'postgres', {
-  host: 'database', // Используем имя сервиса из docker-compose.yml
-  dialect: 'postgres',
+const dbConfig = process.env.NODE_ENV === 'test' 
+  ? {
+      database: 'video_chat_test',
+      username: 'postgres',
+      password: 'postgres',
+      host: process.env.DB_HOST || 'localhost',
+      port: process.env.DB_PORT || 5433,
+      dialect: 'postgres',
+      logging: false // Отключаем логирование SQL в тестовом режиме
+    }
+  : {
+      database: 'video_chat',
+      username: 'postgres',
+      password: 'postgres',
+      host: 'database',
+      dialect: 'postgres'
+    };
+
+const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, {
+  host: dbConfig.host,
+  port: dbConfig.port,
+  dialect: dbConfig.dialect,
+  logging: dbConfig.logging,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  }
 });
 
 // Модель пользователя
@@ -128,7 +154,7 @@ function getClientRooms() {
 function shareRoomsInfo() {
   const rooms = getClientRooms().filter(roomID => {
     const clients = io.sockets.adapter.rooms.get(roomID);
-    return clients && clients.size > 0; // Убедимся, что в комнате есть пользователи
+    return clients && clients.size > 0;
   });
   console.log(getClientRooms(), rooms);
   io.emit(ACTIONS.SHARE_ROOMS, {
@@ -304,8 +330,10 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(publicPath, 'index.html'));
 });
 
-server.listen(PORT, () => {
-  console.log('Server Started!')
-})
+if (require.main === module) {
+  server.listen(PORT, () => {
+    console.log('Server Started!')
+  });
+}
 
-module.exports = { sequelize, User };
+module.exports = { app, server, io, sequelize, User };

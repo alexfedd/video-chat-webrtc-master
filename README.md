@@ -1,70 +1,130 @@
-# Getting Started with Create React App
+# Видеочат на WebRTC
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Веб-приложение для видеоконференций с поддержкой многопользовательских комнат, аутентификацией и настройками устройств.
 
-## Available Scripts
+## Возможности
 
-In the project directory, you can run:
+- 💬 Многопользовательские видеоконференции
+- 🔒 Регистрация и авторизация пользователей
+- 🎥 Управление камерой и микрофоном
+- 🔧 Настройка аудио и видео устройств
+- 🎨 Современный Material-UI интерфейс
+- 🌙 Тёмная тема
+- 📱 Адаптивный дизайн
 
-### `yarn start`
+## Установка и запуск
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Предварительные требования
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Node.js 14+ и npm
+- Docker (для развертывания)
 
-### `yarn test`
+### Локальная установка
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Клонируйте репозиторий:
 
-### `yarn build`
+```bash
+git clone https://github.com/your-username/video-chat-webrtc.git
+cd video-chat-webrtc
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Установите зависимости:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Создайте файл `.env` в корневой директории:
 
-### `yarn eject`
+```
+REACT_APP_API_URL=http://localhost:5000
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+4. Запустите приложение:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Приложение будет доступно по адресу [http://localhost:3000](http://localhost:3000)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Сборка для продакшена
 
-## Learn More
+Для создания оптимизированной версии приложения выполните:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm run build
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Собранные файлы будут находиться в директории `build`.
 
-### Code Splitting
+## Зависимости
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Основные библиотеки:
 
-### Analyzing the Bundle Size
+- React
+- WebRTC API
+- Material-UI (@mui/material)
+- Axios
+- JWT для аутентификации
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Развертывание в Docker
 
-### Making a Progressive Web App
+1. Создайте Docker образ:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+docker build -t video-chat-webrtc .
+```
 
-### Advanced Configuration
+2. Запустите контейнер:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+docker run -p 80:80 video-chat-webrtc
+```
 
-### Deployment
+Приложение будет доступно по адресу [http://localhost](http://localhost)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Структура проекта
 
-### `yarn build` fails to minify
+```
+src/
+├── components/    # Переиспользуемые компоненты
+├── pages/        # Страницы приложения
+│   ├── Auth/     # Регистрация и вход
+│   ├── Room/     # Комната видеочата
+│   ├── Main/     # Главная страница
+│   └── Settings/ # Настройки
+├── services/     # API и WebRTC сервисы
+└── utils/        # Вспомогательные функции
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Использование
+
+1. Зарегистрируйтесь или войдите в систему
+2. На главной странице создайте новую комнату или присоединитесь к существующей
+3. Настройте камеру и микрофон в меню настроек
+4. Управляйте устройствами с помощью кнопок в интерфейсе видеочата
+5. Для выхода из комнаты нажмите кнопку "Покинуть"
+
+## Безопасность
+
+- Все соединения защищены с помощью HTTPS
+- Аутентификация пользователей через JWT токены
+- Шифрование WebRTC соединений
+
+## Поддержка браузеров
+
+- Google Chrome (рекомендуется)
+- Mozilla Firefox
+- Microsoft Edge
+- Safari 11+
+
+## Вклад в проект
+
+1. Форкните репозиторий
+2. Создайте ветку с новой функциональностью
+3. Отправьте пулл-реквест
+
+## Лицензия
+
+MIT
